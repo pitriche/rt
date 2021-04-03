@@ -1,0 +1,59 @@
+# >Window: resolution x y (pixels) - window name<
+Window:	1280 720 - Minecrat RTX DLSS on
+
+
+# position :	3d vector, real numbers	| camera origin | in meters
+# orientation :	3d vector, real numbers	| representing yaw pitch and roll, from positive z with positive y as up | in degrees 
+# fov :			real number				| horizontal fov | in degrees
+# >position - orientation - fov<
+Camera:	0 0 0 - 0 0 0 - 90
+
+
+# -------------------- Scene -------------------- #
+
+# position :	3d vector, real numbers		| sphere origin | in meters
+# radius :		real number					| sphere radius | in meters
+# color :		3d vector, natural numbers	| sphere RGB color | in value from 0 to 255
+# >Sphere: position - radius - color<
+Sphere:
+	-1 -0.1 10.3 - 2.05 - 144 238 144
+Sphere:
+	1.0 0.1 10.1 - 1.8 - 196 164 132
+Sphere:
+	0.0 -10.1 10.1 - 9.4 - 120 164 250
+
+
+# eyes
+Sphere:
+	-1 -0.1 8.3 - 0.65 - 100 23 14
+Sphere:
+	1.0 0.1 8.1 - 0.6 - 109 16 32
+
+
+# position :	3d vector, real numbers		| sphere origin | in meters
+# direction :	3d vector, real numbers		| sphere radius | in meters
+# color :		3d vector, natural numbers	| sphere RGB color | in value from 0 to 255
+# >Plan: position - direction - color<
+Plan:
+	1.0 -1.5 0.1 - 0 10000 -1 - 19 64 162
+Plan:
+	0 -2.1 7.3 - 0 -1 1 - 177 156 217
+
+
+
+# -------------------- Lights -------------------- #
+
+# position :		3d vector, real numbers		| light origin | in meters
+# luminous flux :	real number					| light intensity | in lumen
+# >SpotLight: position - luminous flux<
+SpotLight:	0.0 5.0 3.0 - 1600
+
+
+# direction :		3d vector, real numbers		| representing yaw pitch and roll, from positive z with positive y as up | in degrees
+# illuminance :		real number					| parallel light illuminance | in lux
+# >ParallelLight: direction - illuminance<
+ParallelLight:	0.0 5.0 3.0 - 20.0
+
+# illuminance :		real number	| ambiant light illuminance | in lux
+# >AmbiantLight: illuminance<
+AmbiantLight:	10.0
