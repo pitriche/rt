@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Vec3d.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitriche <pitriche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/01 17:33:13 by pitriche         ###   ########.fr       */
+/*   Updated: 2021/04/05 14:49:15 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ class Vec3d
 		Vec3d<T>(T x_, T y_, T z_) : x(x_), y(y_), z(z_) { }
 		Vec3d<T>(const Vec3d &src) { *this = src; }
 		virtual ~Vec3d<T>(void) { }
+
+		T			length(void) { return (sqrt((*this) * (*this))); }
 
 		void		normalize(void)
 		{
