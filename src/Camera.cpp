@@ -6,11 +6,12 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/03/27 21:36:48 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/05 12:26:29 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Camera.hpp"
+#include "Utils.hpp"
 
 Camera::Camera(void) : pix(0), _is_init(false) { }
 Camera::Camera(const Camera &) { }
@@ -31,7 +32,8 @@ void	Camera::init(unsigned res_x, unsigned res_y, unsigned fov)
 	if (fov >= 180 || fov == 0)
 		throw std::out_of_range("Invalid fov");
 	if (this->_is_init)
-		delete [] this->pix;
+		Utils::error_quit("Cannot initialize Camera twice");
+		// delete [] this->pix;
 	this->pix = new Vec3d<t_camera_real>[res_x * res_y];
 	tmp = this->pix;
 	pix_l = tanf(fov * static_cast<float>(M_PI) / 360.0f) / (float)res_x;

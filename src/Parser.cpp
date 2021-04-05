@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitriche <pitriche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/02 09:12:25 by pitriche         ###   ########.fr       */
+/*   Updated: 2021/04/05 13:41:58 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,30 @@ static void			parse_window(std::istream &is)
 	unsigned	x_window;
 	unsigned	y_window;
 	std::string	name_window;
+
 	is >> x_window >> y_window;
 	_check(is, "Camera");
 	std::getline(is, name_window);
 	all.disp.init(name_window, x_window, y_window);
 }
+
+static void			parse_camera(std::istream &is)
+{
+	unsigned		fov;
+
+	if (!all.disp.is_init())
+		Utils::error_quit("Initialize Window before Camera");
+	all.cam.pos = _parse_vec3df(is);
+	_check(is, "Camera");
+	all.cam.dir = _parse_vec3df(is);
+	_check(is, "Camera");
+	is >> fov;
+	if (fov > 180)
+		Utils::error_quit("Fov must be under 180 deg");
+	all.cam.init(all.disp.res_x, all.disp.res_y, fov);
+	
+}
+
 static Object		*parse_sphere(std::istream &is, unsigned &id)
 {
 	Sphere	*obj;
@@ -140,20 +159,21 @@ namespace Parser
 		is >> str;
 		while (!str.empty())
 		{
-			if (str == "#")
-				std::getline(is, dump);
+			if (str == "Window:")
+				parse_window(is);
+			else if (str == "Camera:")
+				parse_camera(is);
 			else if (str == "Sphere:")
 				sc.obj.push_back(parse_sphere(is, id));
 			else if (str == "Plan:")
 				sc.obj.push_back(parse_plan(is, id));
-			else if (str == "Window:")
-				parse_window(is);
 			else if (str == "SpotLight:")
 				sc.spot.push_back(parse_spot(is));
 			else if (str == "ParallelLight:")
 				sc.para.push_back(parse_para(is));
 			else if (str == "AmbiantLight:")std::getline(is, dump);
-			else if (str == "Camera:")std::getline(is, dump);
+			else if (str == "#")
+				std::getline(is, dump);
 			else
 				Utils::error_quit("Invalid element: >" + str + "<");
 			str.clear();

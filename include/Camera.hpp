@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Camera.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitriche <pitriche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/03/23 16:21:29 by pitriche         ###   ########.fr       */
+/*   Updated: 2021/04/05 13:26:22 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ struct Camera
 		** generates the camera from the given screen resolution and fov (deg)
 		*/
 		void	init(unsigned res_x, unsigned res_y, unsigned fov);
+
+		Vec3d<float>			pos;
+
+		/*
+		** pitch yaw roll from Z axis with Y axis as up, in radian, clockwise
+		** around each axis
+		*/
+		Vec3d<float>			dir;
 
 		Vec3d<t_camera_real>	*pix;
 
