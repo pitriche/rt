@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Scene.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitriche <pitriche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/01 18:13:34 by pitriche         ###   ########.fr       */
+/*   Updated: 2021/04/05 14:59:36 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ class Scene
 
 		std::vector<SpotLight *>	spot; 		// Spot lights
 		std::vector<ParaLight *>	para;		// Parallel lights
-		double					ambiant;	// Ambiant light in lux
+		float						ambiant;	// Ambiant light illuminance in lux
 
 		Scene	&operator=(const Scene &rhs);
 
