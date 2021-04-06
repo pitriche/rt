@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/05 13:26:22 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/05 14:25:00 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ struct Camera
 		** generates the camera from the given screen resolution and fov (deg)
 		*/
 		void	init(unsigned res_x, unsigned res_y, unsigned fov);
+
+		bool	is_init(void) const;
 
 		Vec3d<float>			pos;
 

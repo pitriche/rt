@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/05 12:26:29 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/05 14:24:37 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ void	Camera::init(unsigned res_x, unsigned res_y, unsigned fov)
 	}
 	this->_is_init = true;
 }
+
+bool	Camera::is_init(void) const { return (this->_is_init); }
 
 Camera	&Camera::operator=(const Camera &) { return (*this); }
