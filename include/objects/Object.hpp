@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Object.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pierre42 <pierre42@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/03 17:57:20 by pierre42         ###   ########.fr       */
+/*   Updated: 2021/04/08 21:10:34 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@ class Object;
 
 #ifndef OBJECT_HPP
 # define OBJECT_HPP
+
+# include <vector>
 
 # include "Hit.hpp"
 # include "Vec3d.hpp"
@@ -28,7 +30,14 @@ class Object
 
 		const unsigned	id; // object id, allows for quick comparison
 
-		Vec3d<float>	pos; // xyz position
+		Vec3d<float>	absolute_pos; // initial position
+		Vec3d<float>	absolute_dir; // initial direction
+
+		// xyz position, after camera translation
+		Vec3d<float>	pos;
+		// pitch yaw roll direction, after camera rotation
+		Vec3d<float>	dir;
+		
 		Color			color;
 
 		bool			is_full; // object has volume or not
@@ -36,10 +45,14 @@ class Object
 		float			reflectivity; // 0 to 1 real
 
 		// ray intersection function with 0,0,0 origin
-		virtual bool			hit(const Vec3d<float> &dir, Hit &hit) const;
+		virtual bool			hit(const Vec3d<float> &dir, std::vector<Hit>
+			&hits);
 		virtual bool			hit(const Vec3d<float> &origin,
-			const Vec3d<float> &dir, Hit &hit) const;
+			const Vec3d<float> &dir, std::vector<Hit> &hits);
 		virtual	Vec3d<float>	normal(const Vec3d<float> &hit_pos) const;
+
+		void					apply_camera(const Vec3d<float> &camera_pos,
+			const Vec3d<float> &camera_dir);
 
 		virtual Object	&operator=(const Object &rhs);
 		bool			operator==(const Object &rhs);

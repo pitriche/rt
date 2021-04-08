@@ -6,14 +6,14 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/05 14:24:37 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/07 11:12:33 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Camera.hpp"
 #include "Utils.hpp"
 
-Camera::Camera(void) : pix(0), _is_init(false) { }
+Camera::Camera(void) : fspeed(0.0f), pix(0), _is_init(false) { }
 Camera::Camera(const Camera &) { }
 Camera::~Camera(void)
 {
@@ -36,7 +36,7 @@ void	Camera::init(unsigned res_x, unsigned res_y, unsigned fov)
 		// delete [] this->pix;
 	this->pix = new Vec3d<t_camera_real>[res_x * res_y];
 	tmp = this->pix;
-	pix_l = tanf(fov * static_cast<float>(M_PI) / 360.0f) / (float)res_x;
+	pix_l = 2 * tanf(fov * static_cast<float>(M_PI) / 360.0f) / (float)res_x;
 	for (int j = 0; j < static_cast<int>(res_y); j++)
 	{
 		for (int i = 0; i < static_cast<int>(res_x); i++)

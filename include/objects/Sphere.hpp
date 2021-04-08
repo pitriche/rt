@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Sphere.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pierre42 <pierre42@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/03 17:57:31 by pierre42         ###   ########.fr       */
+/*   Updated: 2021/04/08 18:48:18 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ class Sphere : public Object
 
 		float	size;
 
-		bool	hit(const Vec3d<float> &dir, Hit &hit) const;
-		bool	hit(const Vec3d<float> &origin, const Vec3d<float> &dir, Hit
-			&hit) const;
+		bool	hit(const Vec3d<float> &dir, std::vector<Hit> &hits);
+		bool	hit(const Vec3d<float> &origin, const Vec3d<float> &dir,
+			std::vector<Hit> &hits);
 		virtual	Vec3d<float>	normal(const Vec3d<float> &hit_pos) const;
 
 		Sphere	&operator=(const Sphere &rhs);

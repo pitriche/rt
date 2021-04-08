@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/05 14:25:00 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/07 11:29:49 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ struct Camera
 
 		bool	is_init(void) const;
 
+		// camera film speed, true colors when illuminance equals 1/fspeed
+		float					fspeed;
 		Vec3d<float>			pos;
 
 		/*

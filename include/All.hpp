@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   All.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pierre42 <pierre42@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 20:59:50 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/03 17:24:29 by pierre42         ###   ########.fr       */
+/*   Updated: 2021/04/08 18:46:37 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include "Time.hpp"
 # include "Utils.hpp"
 
-# define MAX_THREADS	64
-# define MAX_HITS		256	// therefore max number of objects
+# define MAX_THREADS		64
+# define MAX_EXPECTED_HITS	64
 
 
 struct All

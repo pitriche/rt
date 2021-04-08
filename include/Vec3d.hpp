@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 19:47:16 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/08 20:47:19 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,10 @@ class Vec3d
 			return (*this);
 		}
 
-		Vec3d<T>	&operator==(const Vec3d<T> &rhs)
+		bool		operator==(const Vec3d<T> &rhs) const
 		{ return (this->x == rhs.x && this->y == rhs.y && this->z == rhs.z); }
 
-		Vec3d<T>	&operator!=(const Vec3d<T> &rhs)
+		bool		operator!=(const Vec3d<T> &rhs) const
 		{ return (this->x != rhs.x || this->y != rhs.y || this->z != rhs.z); }
 
 		// Vector addition

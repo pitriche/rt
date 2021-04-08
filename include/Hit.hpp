@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Hit.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitriche <pitriche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/01 17:52:19 by pitriche         ###   ########.fr       */
+/*   Updated: 2021/04/07 10:49:05 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ class Hit
 		Hit(const Hit &src);
 		virtual ~Hit(void);
 
+		// true if ray enters in object, false if ray exit object
+		bool			enter;
 		Object			*obj;
 		float			dist;
 

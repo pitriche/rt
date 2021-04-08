@@ -1,0 +1,19 @@
+# This file is intended to test the lightings
+
+
+Sphere: 0 0 0 - 5 - 0.0 - 255 200 200
+Sphere: 0 5 0 - 0.5 - 0.0 - 20 200 200
+Sphere: -7 7 0 - 1.7 - 0.0 - 230 100 120
+Sphere: 1 0.5 -8 - 0.5 - 0.0 - 20 200 200
+Sphere: -1 0.2 6 - 0.5 - 0.0 - 20 200 200
+
+
+Window:	1280 720 - Light Test
+Camera:	0 0 -10 - -10 1 0 - 100.0 - 120
+
+# ParallelLight:	0 0 0 - 100
+ParallelLight:	25 90 1980 - 80
+
+# SpotLight: 	0 10 3 - 10000
+
+AmbiantLight:	10.0

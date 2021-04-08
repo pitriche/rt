@@ -1,0 +1,50 @@
+# This file is intended to test the camera
+# it has 6 large spheres for cardinal points and up and down
+# and 4 small spheres for NW NE SW SE respectively
+
+# north (positive z), blue
+Sphere: 0 0 10 - 1 - 0.0 - 1 1 255
+
+# south (negative z), yellow
+Sphere: 0 0 -10 - 1 - 0.0 - 255 255 1
+
+# west (negative x), red
+Sphere: -10 0 0 - 1 - 0.0 - 255 1 1
+
+# east (positive x), green
+Sphere: 10 0 0 - 1 - 0.0 - 1 255 1
+
+# up (positive y), white
+Sphere: 0 10 0 - 1 - 0.0 - 255 255 255
+
+# down (negative y), dark grey
+Sphere: 0 -10 0 - 1 - 0.0 - 50 50 50
+
+
+# north-west (positive z - negative x)
+Sphere: -10 0 10 - 0.5 - 0.0 - 180 1 180
+
+# north-east (positive z - positive x)
+Sphere: 10 0 10 - 0.5 - 0.0 - 1 180 180
+
+# south-west (negative z - negative x)
+Sphere: -10 0 -10 - 0.5 - 0.0 - 255 65 1
+
+# south-east (negative z - positive x)
+Sphere: 10 0 -10 - 0.5 - 0.0 - 155 155 1
+
+
+
+Window:	1280 720 - Camera Test
+Camera:	0 0 0 - -10 1 0 - 100.0 - 140
+
+# SpotLight:		15.0 0.0 0.0 - 8000
+# SpotLight:		-15.0 0.0 0.0 - 8000
+# SpotLight:		0.0 15.0 0.0 - 8000
+# SpotLight:		0.0 -15.0 0.0 - 8000
+# SpotLight:		0 0 15.0 - 8000
+# SpotLight:		0 0 -15.0 - 8000
+
+ParallelLight:		0 0 0 - 100
+
+AmbiantLight:	10.0

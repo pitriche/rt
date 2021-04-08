@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pierre42 <pierre42@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 09:29:13 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/03 18:56:25 by pierre42         ###   ########.fr       */
+/*   Updated: 2021/04/08 22:38:20 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include <fstream>
+#include <iostream>		// parsing
+#include <fstream>		// parsing
+
+#include <pthread.h>	// posix threads
+#include <cstring>		// memset
+
 #include "All.hpp"
-
-#include <pthread.h>
-
 #include "Parser.hpp"
-#include "Sphere.hpp"
 
 All	all;
 
@@ -25,64 +25,67 @@ void	init(void)
 {
 	if (!all.disp.is_init())
 		Utils::error_quit("Need a Window: in .mica file");
-	all.cam.init(1280, 720, 90);
+	if (!all.cam.is_init())
+		Utils::error_quit("Need a Camera: in .mica file");
 	all.time.set_average_sample(5);
 	//all.time.set_fps(60);
 	all.set_threads(4);
 }
 
+static bool	_compare_dist(const Hit &hit1, const Hit &hit2)
+{ return (hit1.dist < hit2.dist); }
+
 void	*threadFun(void *arg)
 {
-	ThreadContext	&tc = *reinterpret_cast<ThreadContext *>(arg);
-	Hit				hits[MAX_HITS];
-	Hit				*closest_hit;
-	unsigned		nhit;
-	unsigned		color;
+	ThreadContext		&tc = *reinterpret_cast<ThreadContext *>(arg);
+	std::vector<Hit>	hits;
+	Hit					*closest_hit;
+	unsigned			selected_hit;
 
-	Vec3d<float>	null(0.0f, 0.0f, 0.0f);
-
+	hits.reserve(MAX_EXPECTED_HITS);
 	for (unsigned pix = tc.start; pix < tc.end; pix++)
 	{
-		nhit = 0;
+		hits.clear();
 		for (unsigned obj_id = 0; obj_id < all.scene.obj.size(); ++obj_id)
-		{
-			if (all.scene.obj[obj_id]->hit(all.cam.pix[pix], hits[nhit]))
-			{
-				hits[nhit].obj = all.scene.obj[obj_id];
-				if (nhit == 0)
-					closest_hit = hits;
-				else
-					if (hits[nhit].dist < closest_hit->dist)
-						closest_hit = &hits[nhit];
-				++nhit;
-			}
-		}
-		if (nhit)
-		{
-			Vec3d<float>	hit_pos(0.0f, 0.0f, 0.0f);
-			Vec3d<float>	vec_light;
-			Vec3d<float>	vec_normal;
-			Hit				tmp_hit;
-			bool			masked;
-			float			dp;
+			// all.scene.obj[obj_id]->hit(all.cam.pix[pix], hits);
+			all.scene.obj[obj_id]->hit(Vec3d<float>(0,0,0), all.cam.pix[pix], hits);
 
-			hit_pos = closest_hit->pos(hit_pos, all.cam.pix[pix]); 
-			vec_light = all.scene.spot[0]->pos - hit_pos;
-			vec_light.normalize();
-			vec_normal = closest_hit->obj->normal(hit_pos);
-			masked = false;
-			for (unsigned obj_id = 0; obj_id < all.scene.obj.size(); ++obj_id)
-			{
-				if (all.scene.obj[obj_id]->hit(hit_pos, vec_light, tmp_hit))
-					masked = true;
-			}
-			dp = vec_light * vec_normal;
-			if (dp < 0)
-				dp *= -1.0f;
-			if (masked)
-				dp = 0.0f;
-			color = closest_hit->obj->color.rgb_dim(dp);
-			all.disp.pixels[pix] = color;
+		std::sort(hits.begin(), hits.end(), _compare_dist);
+		selected_hit = 0;
+		while (hits.size() > 0UL && hits[selected_hit].dist < 0.0f)
+			++selected_hit;
+			//find closest hit (vry important)
+			// tolerance negative for entering hits
+			// tolerance positive for exiting hits
+		closest_hit = &hits[selected_hit];
+
+
+
+		if (hits.size() != 0)
+		{
+			Vec3d<float>	hit_pos;
+			Vec3d<float>	hit_normal;
+			float			illuminance;
+
+			illuminance = all.scene.ambiant;
+			hit_pos = closest_hit->pos(Vec3d<float>(0, 0, 0), all.cam.pix[pix]); 
+			hit_normal = closest_hit->obj->normal(hit_pos);
+			for (unsigned id_spot = 0; id_spot < all.scene.spot.size();
+				++id_spot)
+				illuminance += all.scene.spot[id_spot]->illuminance_at(hit_pos,
+					hit_normal);
+			for (unsigned id_para = 0; id_para < all.scene.para.size();
+				++id_para)
+				illuminance += all.scene.para[id_para]->illuminance_at(hit_pos,
+					hit_normal);
+
+			all.disp.pixels[pix] = closest_hit->obj->color.rgb_dim(illuminance *
+				all.cam.fspeed);
+			/* debug lines */
+			// if (pix % all.disp.res_x == 700)
+			// 	all.disp.pixels[pix] = 0xff2020;
+			// if (pix % all.disp.res_x == 701 && (((pix / all.disp.res_x) * 100) / 720) % 10 == 0)
+			// 	all.disp.pixels[pix] = 0xff2020;
 		}
 	}
 	return (0);
@@ -91,30 +94,12 @@ void	*threadFun(void *arg)
 
 static void	loop(void)
 {
-	static bool left = true;
-	if (left)
-	{
-		all.scene.spot[0]->pos.x += 0.5;
-		// all.scene.obj[3]->pos.x += 0.007;
-		// all.scene.obj[4]->pos.x += 0.007;
-		if (all.scene.spot[0]->pos.x > 20)
-			left = false;
-	}
-	else
-	{
-		all.scene.spot[0]->pos.x -= 0.5;
-		// all.scene.obj[3]->pos.x -= 0.007;
-		// all.scene.obj[4]->pos.x -= 0.007;
-		if (all.scene.spot[0]->pos.x < -20)
-			left = true;
-	}
-	
-
-
 	all.event.update();
-	for (unsigned i = 0; i < all.disp.total_pixel; i++)
-		all.disp.pixels[i] = 0;
-	
+	all.scene.apply_animation();
+	all.scene.apply_camera(all.cam.pos, all.cam.dir);
+
+	std::memset(all.disp.pixels, 0, all.disp.total_pixel * sizeof(unsigned));
+
 	for (unsigned i = 0; i < all.nb_threads(); i++)
 	{
 		all.tc[i].start = i * all.disp.total_pixel / all.nb_threads();

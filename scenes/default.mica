@@ -4,30 +4,32 @@ Window:	1280 720 - Minecrat RTX DLSS on
 
 # position :	3d vector, real numbers	| camera origin | in meters
 # orientation :	3d vector, real numbers	| representing yaw pitch and roll, from positive z with positive y as up | in degrees 
+# fspeed :		real number				| film speed (camera ISO), camera sensitivity to light | in arbitrary units, 100 fspeed shows true colors at 100 lux
 # fov :			real number				| horizontal fov | in degrees
-# >position - orientation - fov<
-Camera:	0 0 0 - 0 0 0 - 90
+# >position - orientation - fspeed - fov<
+Camera:	0 0 0 - 0 0 0 - 100.0 - 100
 
 
 # -------------------- Scene -------------------- #
 
 # position :	3d vector, real numbers		| sphere origin | in meters
 # radius :		real number					| sphere radius | in meters
+# transparency:	real number					| self explanatory | in value from 0 (opaque) to 1 (fully transparent)
 # color :		3d vector, natural numbers	| sphere RGB color | in value from 0 to 255
-# >Sphere: position - radius - color<
+# >Sphere: position - radius - transparency - color<
 Sphere:
-	-1 -0.1 10.3 - 2.05 - 144 238 144
+	-1 -0.1 10.3 - 2.05 - 0.0 - 144 238 144
 Sphere:
-	1.0 0.1 10.1 - 1.8 - 196 164 132
+	1.0 0.1 10.1 - 1.8 - 0.0 - 196 164 132
 Sphere:
-	0.0 -10.1 10.1 - 9.4 - 120 164 250
+	0.0 -10.1 10.1 - 9.4 - 0.0 - 120 164 250
 
 
 # eyes
 Sphere:
-	-1 -0.1 8.3 - 0.65 - 100 23 14
+	-1 -0.1 8.3 - 0.65 - 0.7 - 100 23 14
 Sphere:
-	1.0 0.1 8.1 - 0.6 - 109 16 32
+	1.0 0.1 8.1 - 0.6 - 0.7 - 109 16 32
 
 
 # position :	3d vector, real numbers		| sphere origin | in meters
@@ -37,7 +39,7 @@ Sphere:
 Plan:
 	1.0 -1.5 0.1 - 0 10000 -1 - 19 64 162
 Plan:
-	0 -2.1 7.3 - 0 -1 1 - 177 156 217
+	0 -2.1 7.3 - 0 1 -1 - 177 156 217
 
 
 
@@ -56,4 +58,4 @@ ParallelLight:	0.0 5.0 3.0 - 20.0
 
 # illuminance :		real number	| ambiant light illuminance | in lux
 # >AmbiantLight: illuminance<
-AmbiantLight:	10.0
+AmbiantLight:	25.0
