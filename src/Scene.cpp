@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 22:46:51 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/08 22:53:49 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	Scene::apply_animation(void)
 	// 		left = true;
 	// }
 	// // all.scene.obj[5]->pos.z += 0.3f;
+	this->spot[0]->absolute_pos.rotate_y(0.08);
 	this->obj[1]->absolute_pos.rotate_x(0.14);
 	this->obj[2]->absolute_pos.rotate_y(-0.06);
 	this->obj[2]->absolute_pos.rotate_x(-0.06);

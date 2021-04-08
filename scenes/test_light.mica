@@ -12,8 +12,8 @@ Window:	1280 720 - Light Test
 Camera:	0 0 -10 - -10 1 0 - 100.0 - 120
 
 # ParallelLight:	0 0 0 - 100
-ParallelLight:	25 90 1980 - 80
+ParallelLight:	25 90 1980 - 40
 
-# SpotLight: 	0 10 3 - 10000
+SpotLight: 	0 -1 -20 - 12000
 
 AmbiantLight:	10.0
