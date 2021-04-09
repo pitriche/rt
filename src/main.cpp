@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 09:29:13 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 22:38:20 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 11:52:51 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ static void	loop(void)
 
 	all.disp.update();
 	all.time.update();
-	std::cout << "  " << all.time.fps_average() << std::endl;
+	// std::cout << "  " << all.time.fps_average() << std::endl;
+	std::cout << "  " << all.time.time_to_frame() << std::endl;
 }
 
 int			main(int ac, char **av)

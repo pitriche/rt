@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 16:05:17 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 11:42:51 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ static void			parse_window(std::istream &is)
 
 	x_window = static_cast<unsigned>(_parse_real(is));
 	y_window = static_cast<unsigned>(_parse_real(is));
+	if (x_window > 10000 || y_window > 10000)
+		Utils::error_quit("Max window size: 10000 pixels");
 	_check(is, "Camera");
 	std::getline(is, name_window);
 	all.disp.init(name_window, x_window, y_window);
@@ -90,6 +92,8 @@ static void			parse_camera(std::istream &is)
 	fspeed = _parse_real(is);
 	_check(is, "Camera");
 	fov = static_cast<unsigned>(_parse_real(is));
+	if (fov == 0)
+		Utils::error_quit("Fov must be non null");
 	if (fov > 180)
 		Utils::error_quit("Fov must be under 180 deg");
 	all.cam.init(all.disp.res_x, all.disp.res_y, fov);
@@ -139,6 +143,8 @@ static SpotLight	*parse_spot(std::istream &is)
 	obj->absolute_pos = _parse_vec3df(is);
 	_check(is, "Spot light");
 	obj->lflux = _parse_real(is);
+	if (obj->lflux < 0.0f)
+		Utils::error_quit("Luminous flux must be positive !");
 	return (obj);
 }
 
@@ -149,6 +155,8 @@ static ParaLight	*parse_para(std::istream &is)
 	obj->absolute_dir = (_parse_vec3df(is) * static_cast<float>(M_PI)) / 180.0f;
 	_check(is, "Parallel light");
 	obj->illuminance = _parse_real(is);
+	if (obj->illuminance < 0.0f)
+		Utils::error_quit("Illuminance must be positive !");
 	return (obj);
 }
 

@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 23:00:09 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 11:26:19 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,40 @@ Scene::Scene(void) : ambiant(0.0) { }
 Scene::Scene(const Scene &src) { *this = src; }
 Scene::~Scene(void) { }
 
+/*
+** Free space for hardcoding animations, because it isn't a bonus to place
+** them in the file
+*/
 void	Scene::apply_animation(void)
 {
-	// to Scene::animation()
+	// default animations
 	// static bool left = true;
 	// if (left)
 	// {
-	// 	all.scene.spot[0]->pos.x += 0.5f;
+	// 	this->spot[0]->absolute_pos.x += 0.5f;
 	// 	// all.scene.obj[3]->pos.x += 0.007f;
 	// 	// all.scene.obj[4]->pos.x += 0.007f;
-	// 	if (all.scene.spot[0]->pos.x > 20)
+	// 	if (this->spot[0]->absolute_pos.x > 20)
 	// 		left = false;
 	// }
 	// else
 	// {
-	// 	all.scene.spot[0]->pos.x -= 0.5f;
+	// 	this->spot[0]->absolute_pos.x -= 0.5f;
 	// 	// all.scene.obj[3]->pos.x -= 0.007f;
 	// 	// all.scene.obj[4]->pos.x -= 0.007f;
-	// 	if (all.scene.spot[0]->pos.x < -20)
+	// 	if (this->spot[0]->absolute_pos.x < -20)
 	// 		left = true;
 	// }
-	// // all.scene.obj[5]->pos.z += 0.3f;
-	this->spot[0]->absolute_pos.rotate_y(0.08f);
-	this->obj[1]->absolute_pos.rotate_x(0.14f);
-	this->obj[2]->absolute_pos.rotate_y(-0.06f);
-	this->obj[2]->absolute_pos.rotate_x(-0.06f);
-	this->obj[3]->absolute_pos.rotate_y(0.05f);
+
+	// test_light animations
+	// this->spot[0]->absolute_pos.rotate_y(0.08f);
+	// this->obj[1]->absolute_pos.rotate_x(0.14f);
+	// this->obj[2]->absolute_pos.rotate_y(0.06f);
+	// this->obj[2]->absolute_pos.rotate_x(-0.06f);
+	// this->obj[3]->absolute_pos.rotate_y(0.05f);
+
+	// test spheres
+	// this->obj[1]->absolute_pos.z += 0.0001;
 }
 
 void	Scene::apply_camera(const Vec3d<float> &camera_pos,

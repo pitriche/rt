@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 19:07:46 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 10:21:14 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,22 @@ float	SpotLight::illuminance_at(const Vec3d<float> &hit_pos, const
 	light_dist = vec_light.length();
 	vec_light.normalize();
 	dot_product = vec_light * normal;
-	if (dot_product <= 0)
-		return (0);
+	// if (dot_product <= 0)
+	//	return (0);
 	illuminance = (this->lflux * dot_product) / (light_dist * 12.56637f);
+	hits.reserve(8);
 	for (unsigned obj_id = 0; obj_id < all.scene.obj.size(); ++obj_id)
 	{
-		//if (all.scene.obj[obj_id]->hit(hit_pos, vec_light, tmp_hit, nb_hit))
-		//{
-			// tej ça
-		//	illuminance = 0;
-			
-			// if (tmp_hit.dist > vec_light.length())
-			// 	masked = true;
-
-		//}
+		hits.clear();
+		if (all.scene.obj[obj_id]->hit(hit_pos, vec_light, hits))
+		{
+			if ((hits.back().dist > 1E-3 || hits.back().enter) &&
+				hits.back().dist < light_dist)
+			{
+				illuminance = 0;
+				break ;
+			}
+		}
 	}
 	return (illuminance);
 }

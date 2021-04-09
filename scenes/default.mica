@@ -3,7 +3,7 @@ Window:	1280 720 - Minecrat RTX DLSS on
 
 
 # position :	3d vector, real numbers	| camera origin | in meters
-# orientation :	3d vector, real numbers	| representing yaw pitch and roll, from positive z with positive y as up | in degrees 
+# orientation :	3d vector, real numbers	| representing pitch yaw and roll, from positive z with positive y as up | in degrees
 # fspeed :		real number				| film speed (camera ISO), camera sensitivity to light | in arbitrary units, 100 fspeed shows true colors at 100 lux
 # fov :			real number				| horizontal fov | in degrees
 # >position - orientation - fspeed - fov<
@@ -33,13 +33,13 @@ Sphere:
 
 
 # position :	3d vector, real numbers		| sphere origin | in meters
-# direction :	3d vector, real numbers		| sphere radius | in meters
+# direction :	3d vector, real numbers		| representing pitch yaw and roll, from positive z with positive y as up | in degrees
 # color :		3d vector, natural numbers	| sphere RGB color | in value from 0 to 255
 # >Plan: position - direction - color<
 Plan:
-	1.0 -1.5 0.1 - 0 10000 -1 - 19 64 162
-Plan:
-	0 -2.1 7.3 - 0 1 -1 - 177 156 217
+	1.0 -1.5 0.1 - -90 0 -1 - 19 64 162
+# Plan:
+# 	0 -2.1 7.3 - 0 1 -1 - 177 156 217
 
 
 
@@ -48,14 +48,14 @@ Plan:
 # position :		3d vector, real numbers		| light origin | in meters
 # luminous flux :	real number					| light intensity | in lumen
 # >SpotLight: position - luminous flux<
-SpotLight:	0.0 5.0 3.0 - 1600
+SpotLight:	0.0 5.0 3.0 - 16000
 
 
-# direction :		3d vector, real numbers		| representing yaw pitch and roll, from positive z with positive y as up | in degrees
+# direction :		3d vector, real numbers		| representing pitch yaw and roll, from positive z with positive y as up | in degrees
 # illuminance :		real number					| parallel light illuminance | in lux
 # >ParallelLight: direction - illuminance<
-ParallelLight:	0.0 5.0 3.0 - 20.0
+# ParallelLight:	0.0 5.0 3.0 - 20.0
 
 # illuminance :		real number	| ambiant light illuminance | in lux
 # >AmbiantLight: illuminance<
-AmbiantLight:	25.0
+AmbiantLight:	15.0
