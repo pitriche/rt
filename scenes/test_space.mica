@@ -35,8 +35,8 @@ Sphere: 10 0 -10 - 0.5 - 0.0 - 155 155 1
 
 
 
-Window:	7280 7200 - Camera Test
-Camera:	0 0 0 - -10 1 0 - 100.0 - 140
+Window:	1280 720 - Camera Test
+Camera:	0 0 0 - -10 1 0 - 100.0 - 120
 
 # SpotLight:		15.0 0.0 0.0 - 8000
 # SpotLight:		-15.0 0.0 0.0 - 8000

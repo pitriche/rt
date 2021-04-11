@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ThreadContext.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pitriche <pitriche@student.42.fr>          +#+  +:+       +#+        */
+/*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 18:57:00 by pitriche          #+#    #+#             */
-/*   Updated: 2021/03/25 09:34:26 by pitriche         ###   ########.fr       */
+/*   Updated: 2021/04/11 12:20:48 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

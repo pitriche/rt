@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/19 09:29:13 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/09 11:52:51 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/11 21:17:09 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,14 @@ void	*threadFun(void *arg)
 			illuminance = all.scene.ambiant;
 			hit_pos = closest_hit->pos(Vec3d<float>(0, 0, 0), all.cam.pix[pix]); 
 			hit_normal = closest_hit->obj->normal(hit_pos);
+
+			// spot lights
 			for (unsigned id_spot = 0; id_spot < all.scene.spot.size();
 				++id_spot)
 				illuminance += all.scene.spot[id_spot]->illuminance_at(hit_pos,
 					hit_normal);
+
+			// parallel lights
 			for (unsigned id_para = 0; id_para < all.scene.para.size();
 				++id_para)
 				illuminance += all.scene.para[id_para]->illuminance_at(hit_pos,
@@ -81,11 +85,11 @@ void	*threadFun(void *arg)
 
 			all.disp.pixels[pix] = closest_hit->obj->color.rgb_dim(illuminance *
 				all.cam.fspeed);
+
 			/* debug lines */
-			// if (pix % all.disp.res_x == 700)
-			// 	all.disp.pixels[pix] = 0xff2020;
-			// if (pix % all.disp.res_x == 701 && (((pix / all.disp.res_x) * 100) / 720) % 10 == 0)
-			// 	all.disp.pixels[pix] = 0xff2020;
+			// if ((debug_x == all.disp.res_x / 2 || debug_x == all.disp.res_x / 2 - 1 || debug_x == all.disp.res_x / 2 + 1)
+			// 	&& debug_y % 5 == 0)
+			// 	all.disp.pixels[debug_x + debug_y * all.disp.res_x] = 0xff0000;
 		}
 	}
 	return (0);
@@ -111,8 +115,8 @@ static void	loop(void)
 
 	all.disp.update();
 	all.time.update();
-	// std::cout << "  " << all.time.fps_average() << std::endl;
-	std::cout << "  " << all.time.time_to_frame() << std::endl;
+	std::cout << "  " << all.time.fps_average() << std::endl;
+	// std::cout << "  " << all.time.time_to_frame() << std::endl;
 }
 
 int			main(int ac, char **av)

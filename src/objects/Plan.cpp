@@ -14,28 +14,33 @@
 #include <cmath>
 
 Plan::Plan(void) : Object(0) { }
-Plan::Plan(unsigned id) : Object(id), absolute_dir(0.0f, 0.0f, 0.0f) { }
+Plan::Plan(unsigned id) : Object(id) { }
 Plan::Plan(const Plan &src) : Object(src.id) { *this = src; }
 Plan::~Plan(void) { }
 
 bool	Plan::hit(const Vec3d<float> &ray_dir, std::vector<Hit> &hits)
 {
+	//to change maybe
+	return (this->hit(Vec3d<float>(0,0,0), ray_dir, hits));
+	throw std::exception();
+
 	float dist;
 	float det;
 
-	det = ray_dir * this->dir;
+	det = ray_dir * this->dir_vec;
+
+
+
 	if (det == 0.0f)
 		return (false);
-	dist = this->pos * this->dir;
+	dist = this->pos * this->dir_vec;
 	dist /= det;
 	if (dist < 0.0f)
 		return (false);
-	
 	hits.push_back(Hit());
 	hits.back().dist = dist;
 	hits.back().obj = this;
-	throw std::logic_error("implement enter/exit for plans");
-	return (true);
+	hits.back().enter = (det < 0);
 }
 
 bool	Plan::hit(const Vec3d<float> &ray_origin, const Vec3d<float> &ray_dir,
@@ -44,28 +49,26 @@ bool	Plan::hit(const Vec3d<float> &ray_origin, const Vec3d<float> &ray_dir,
 	float dist;
 	float det;
 
-	det = ray_dir * this->dir;
+	det = ray_dir * this->dir_vec;
 	if (det == 0.0f)
 		return (false);
-	dist = (this->pos - ray_origin) * this->dir;
+	dist = (this->pos - ray_origin) * this->dir_vec;
 	dist /= det;
 	if (dist < 0.0f)
 		return (false);
-
 	hits.push_back(Hit());
 	hits.back().dist = dist;
 	hits.back().obj = this;
-	throw std::logic_error("implement enter/exit for plans");
+	hits.back().enter = (det < 0);
 	return (true);
 }
 
 Vec3d<float>	Plan::normal(const Vec3d<float> &) const
-{ return(this->dir); }
+{ return(this->dir_vec); }
 
 Plan	&Plan::operator=(const Plan &rhs)
 {
 	this->Object::operator=(rhs);
-	this->dir = rhs.dir;
 	return (*this);
 }
 

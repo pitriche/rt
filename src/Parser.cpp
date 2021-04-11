@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/09 11:42:51 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 15:36:15 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,8 @@ static void			parse_camera(std::istream &is)
 	fspeed = _parse_real(is);
 	_check(is, "Camera");
 	fov = static_cast<unsigned>(_parse_real(is));
-	if (fov == 0)
-		Utils::error_quit("Fov must be non null");
-	if (fov > 180)
-		Utils::error_quit("Fov must be under 180 deg");
+	if (fov == 0 || fov >= 180)
+		Utils::error_quit("Fov must be between 1 and 179 degrees");
 	all.cam.init(all.disp.res_x, all.disp.res_y, fov);
 	all.cam.fspeed = fspeed / 10000.0f;
 }
@@ -113,6 +111,8 @@ static Object		*parse_sphere(std::istream &is, unsigned &id)
 	obj->color = _parse_color(is);
 	obj->is_full = true;
 	obj->reflectivity = 0.0f;
+	if (obj->size <= 0.0f)
+		Utils::error_quit("Sphere radius must be strictly positive");
 	if (obj->transparency < 0.0f || obj->transparency > 1.0f)
 		Utils::error_quit("Transparency must be between 0 and 1");
 	return (static_cast<Object *>(obj));
@@ -124,10 +124,7 @@ static Object		*parse_plan(std::istream &is, unsigned &id)
 	obj = new Plan(id++);
 	obj->absolute_pos = _parse_vec3df(is);
 	_check(is, "Plan");
-	throw std::logic_error("Plans parsing need to convert pitch yaw roll to vec");
 	obj->absolute_dir = (_parse_vec3df(is) * static_cast<float>(M_PI)) / 180.0f;
-	// HERE !!
-
 	_check(is, "Plan");
 	obj->color = _parse_color(is);
 	obj->is_full = false;

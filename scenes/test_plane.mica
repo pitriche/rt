@@ -1,0 +1,16 @@
+# This file is intended to test the plan's lightings
+
+Window:	1280 720 - Sphere Test
+Camera:	0 0 0 - 0 0 0 - 100.0 - 100
+
+Plan: 0 -2 0 - -90 0 0 - 255 200 200
+Sphere: 0 0 30 - 3 - 0 - 100 255 80
+
+ParallelLight:	45 45 0 - 40
+# ParallelLight:	90 90 0 - 100
+
+SpotLight: 	0 -5 20 - 10000
+SpotLight: 	3 1 30 - 8000
+SpotLight: 	0 5 5 - 5000
+
+AmbiantLight:	10.0

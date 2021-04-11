@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/09 11:26:19 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/11 21:08:02 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ void	Scene::apply_animation(void)
 	// this->obj[3]->absolute_pos.rotate_y(0.05f);
 
 	// test spheres
-	// this->obj[1]->absolute_pos.z += 0.0001;
+	// this->obj[1]->absolute_pos.z += 0.0001f;
+
+	// test plane
+	// this->para[0]->absolute_dir.x += 0.01f;
+	// this->spot[0]->absolute_pos.rotate_x(0.01f);
 }
 
 void	Scene::apply_camera(const Vec3d<float> &camera_pos,

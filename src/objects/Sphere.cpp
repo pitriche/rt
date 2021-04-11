@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 22:02:32 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/11 16:58:01 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,39 @@ Sphere::Sphere(unsigned id) : Object(id), size(0) { }
 Sphere::Sphere(const Sphere &src) : Object(src.id) { *this = src; }
 Sphere::~Sphere(void) { }
 
-static bool	_add_hits(float a, float b, float det, std::vector<Hit> &hits)
+
+/*
+** add the hits from the sphere.
+** Enter hit is added if dist is above -epsilon
+** Exit hit is added if dist is positive
+*/
+static bool	_add_hits(float a, float b, float det, Object *obj,
+	std::vector<Hit> &hits)
 {
-	(void)a;
-	(void)b;
-	(void)det;
-	(void)hits;
-	return true; // transfert code here
+	float	tmp_sqrt;
+	float	dist_min;
+	float	dist_max;
+
+	tmp_sqrt = std::sqrtf(det);
+	dist_min = (-b - tmp_sqrt) / (2 * a);
+	dist_max = (-b + tmp_sqrt) / (2 * a);
+	if (dist_min > -SPHERE_EPSILON)
+		hits.push_back(Hit(true, obj, dist_min));
+	if (dist_max > 0.0f)
+	{
+		hits.push_back(Hit(false, obj, dist_max));
+		return (true);
+	}
+	return (false);
+	
 }
 
 bool		Sphere::hit(const Vec3d<float> &ray_dir, std::vector<Hit> &hits)
 {
-	_add_hits(0, 0, 0, hits); // tej ça
-	float a;
-	float b;
-	float c;
-	float det;
-	float dist_min;
-	float dist_max;
-	float tmp_sqrt;
+	float	a;
+	float	b;
+	float	c;
+	float	det;
 
 	a = ray_dir * ray_dir;
 	b = 2 * (ray_dir * (this->pos * -1.0f));
@@ -44,39 +58,16 @@ bool		Sphere::hit(const Vec3d<float> &ray_dir, std::vector<Hit> &hits)
 	det = b * b - 4 * a * c;
 	if (det <= 0)
 		return (false);
-
-
-	tmp_sqrt = std::sqrtf(det);
-	dist_min = (-b - tmp_sqrt) / (2 * a);
-	dist_max = (-b + tmp_sqrt) / (2 * a);
-	if (dist_min > 0.0f)
-	{
-		hits.push_back(Hit());
-		hits.back().dist = dist_min;
-		hits.back().obj = this;
-		hits.back().enter = true;
-	}
-	if (dist_max > 0.0f)
-	{
-		hits.push_back(Hit());
-		hits.back().dist = dist_max;
-		hits.back().obj = this;
-		hits.back().enter = false;
-		return (true);
-	}
-	return (false);
+	return (_add_hits(a, b, det, this, hits));
 }
 
 bool		Sphere::hit(const Vec3d<float> &ray_origin, const Vec3d<float> &ray_dir,
 	std::vector<Hit> &hits)
 {
-	float a;
-	float b;
-	float c;
-	float det;
-	float dist_min;
-	float dist_max;
-	float tmp_sqrt;
+	float	a;
+	float	b;
+	float	c;
+	float	det;
 
 	a = ray_dir * ray_dir;
 	// optimize if origin is null
@@ -94,26 +85,7 @@ bool		Sphere::hit(const Vec3d<float> &ray_origin, const Vec3d<float> &ray_dir,
 	det = b * b - 4 * a * c;
 	if (det <= 0)
 		return (false);
-
-	tmp_sqrt = std::sqrtf(det);
-	dist_min = (-b - tmp_sqrt) / (2 * a);
-	dist_max = (-b + tmp_sqrt) / (2 * a);
-	if (dist_min > 0.0f)
-	{
-		hits.push_back(Hit());
-		hits.back().dist = dist_min;
-		hits.back().obj = this;
-		hits.back().enter = true;
-	}
-	if (dist_max > 0.0f)
-	{
-		hits.push_back(Hit());
-		hits.back().dist = dist_max;
-		hits.back().obj = this;
-		hits.back().enter = false;
-		return (true);
-	}
-	return (false);
+	return (_add_hits(a, b, det, this, hits));
 }
 
 Vec3d<float>	Sphere::normal(const Vec3d<float> &hit_pos) const

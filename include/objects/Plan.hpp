@@ -23,9 +23,6 @@ class Plan : public Object
 		Plan(const Plan &src);
 		virtual ~Plan(void);
 
-		Vec3d<float>	absolute_dir; // plan's normal
-		Vec3d<float>	dir_vec; // plan's normal
-
 		bool			hit(const Vec3d<float> &dir, std::vector<Hit> &hits);
 		bool			hit(const Vec3d<float> &origin, const Vec3d<float> &dir,
 			std::vector<Hit> &hits);

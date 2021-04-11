@@ -6,12 +6,23 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 22:34:36 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/11 21:00:33 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ParaLight.hpp"
 #include "All.hpp"
+
+/*
+** check if the given hits block the light
+*/
+static bool	_do_block(std::vector<Hit> &hits)
+{
+	for (unsigned hit_id = 0; hit_id < hits.size(); ++hit_id)
+		if (hits[hit_id].enter)
+			return (true);
+	return (false);
+}
 
 ParaLight::ParaLight(void) { }
 ParaLight::ParaLight(const ParaLight &src) { *this = src; }
@@ -34,7 +45,7 @@ float	ParaLight::illuminance_at(const Vec3d<float> &hit_pos, const
 		hits.clear();
 		if (all.scene.obj[obj_id]->hit(hit_pos, vec_light, hits))
 		{
-			if (hits.back().dist > 1E-3 || hits.back().enter)
+			if (_do_block(hits))
 			{
 				illuminance = 0;
 				break ;

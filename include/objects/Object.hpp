@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:13:45 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 21:10:34 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 15:53:14 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ class Object
 		const unsigned	id; // object id, allows for quick comparison
 
 		Vec3d<float>	absolute_pos; // initial position
-		Vec3d<float>	absolute_dir; // initial direction
+		Vec3d<float>	absolute_dir; // initial direction, pitch yaw roll in radiant
 
 		// xyz position, after camera translation
 		Vec3d<float>	pos;
-		// pitch yaw roll direction, after camera rotation
-		Vec3d<float>	dir;
+		// xyz vector, after camera rotation
+		Vec3d<float>	dir_vec;
 		
 		Color			color;
 

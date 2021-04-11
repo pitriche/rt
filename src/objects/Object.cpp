@@ -6,7 +6,7 @@
 /*   By: brunomartin <brunomartin@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:14:54 by pitriche          #+#    #+#             */
-/*   Updated: 2021/04/08 19:10:32 by brunomartin      ###   ########.fr       */
+/*   Updated: 2021/04/09 19:40:35 by brunomartin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 Object::Object(void) : id(0) { }
 Object::Object(unsigned id_) : id(id_), absolute_pos(0.0f, 0.0f, 0.0f),
 	absolute_dir(0.0f, 0.0f, 0.0f), pos(0.0f, 0.0f, 0.0f),
-	dir(0.0f, 0.0f, 0.0f), color(255, 255, 255),
+	dir_vec(0.0f, 0.0f, 0.0f), color(255, 255, 255),
 	is_full(false), transparency(0.0f), reflectivity(0.0f) { }
 Object::Object(const Object &src) : id(src.id) { *this = src; }
 Object::~Object(void) { }
@@ -48,6 +48,12 @@ void	Object::apply_camera(const Vec3d<float> &camera_pos,
 	this->pos.rotate_y(-camera_dir.y);
 	this->pos.rotate_x(-camera_dir.x);
 	this->pos.rotate_z(-camera_dir.z);
+	this->dir_vec = Vec3d<float>(0.0f, 0.0f, 1.0f);
+	this->dir_vec.rotate_x(this->absolute_dir.x);
+	this->dir_vec.rotate_y(this->absolute_dir.y);
+	this->dir_vec.rotate_y(-camera_dir.y);
+	this->dir_vec.rotate_x(-camera_dir.x);
+	this->dir_vec.rotate_z(-camera_dir.z);
 }
 
 /*
